@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Relay is a simple, automated returns and refunds demo.">
+<title>Relay Returns</title>
+<style>
+:root{color-scheme:light;--bg:#f5f5ef;--paper:#fff;--ink:#172620;--sub:#46544e;--line:#cbd4cd;--green:#194d3b;--soft:#e8f1e9;--focus:#174cc6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,sans-serif}a{color:var(--green)}button,select,input{font:inherit}button,summary{cursor:pointer}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:4px}h1,h2,p{margin-top:0}
+.wrap{max-width:1060px;margin:0 auto;padding:0 28px}.skip{position:absolute;top:8px;left:12px;z-index:2;padding:8px;background:white;transform:translateY(-200%)}.skip:focus{transform:none}
+header{background:#fbfbf8;border-bottom:1px solid var(--line)}.top{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{display:flex;gap:10px;align-items:center;font-size:20px;font-weight:800;letter-spacing:-.035em}.mark{display:grid;place-items:center;background:var(--green);color:white;width:34px;height:34px;border-radius:10px;font-size:20px}.top-right{display:flex;gap:14px;align-items:center}.top-right a{font-weight:750;padding:10px 0}.badge{font-size:13px;font-weight:700;padding:4px 10px;background:var(--soft);color:#234934;border-radius:30px}
+main.wrap{display:grid;grid-template-columns:1fr minmax(320px,470px);align-items:start;gap:clamp(30px,7vw,95px);padding-top:clamp(35px,8vw,104px);padding-bottom:55px}.intro{padding-top:17px}.eyebrow{font-size:13px;color:var(--green);font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}h1{font-size:clamp(42px,6.4vw,80px);line-height:1;letter-spacing:-.065em;margin-bottom:19px}.intro p{max-width:330px;color:var(--sub);font-size:18px}.intro details{max-width:330px;margin-top:26px}.intro details p{font-size:15px;margin:8px 0 0}
+.card{background:var(--paper);padding:clamp(18px,4vw,32px);border:1px solid var(--line);border-radius:18px;box-shadow:0 12px 38px #283b3010}.card h2{font-size:23px;letter-spacing:-.03em;margin-bottom:17px}label{font-weight:750;display:block;margin-bottom:6px}input,select{width:100%;min-height:48px;border:1px solid #758379;border-radius:8px;padding:9px 12px;color:var(--ink);background:white}.field{margin-bottom:16px}.hint{color:var(--sub);font-size:14px;margin:6px 0 0}
+.primary{background:var(--green);color:white;border:0;border-radius:8px;width:100%;padding:11px 15px;min-height:48px;font-weight:800}.primary:hover{background:#0c392a}details{color:var(--sub)}summary{min-height:44px;display:list-item;padding:9px 0;color:var(--green);font-weight:700}form details{margin-top:8px}.examples{display:flex;flex-wrap:wrap;gap:8px}.examples button{border:1px solid #758379;background:white;color:var(--green);border-radius:7px;min-height:44px;padding:8px 10px;font-weight:650}.examples button:hover{background:var(--soft)}.notice{color:var(--sub);font-size:13px;margin:14px 0 0}
+.result:empty{display:none}.result{margin-top:15px;padding:14px;background:var(--soft);border:1px solid #aabdb0;border-radius:9px}.result[data-status=retry],.result[data-status=denied],.result[data-status=clarify],.result[data-status=invalid]{background:#fff4e5;border-color:#bd9b69}.result h3{font-size:17px;margin:0 0 3px}.result p{margin:0}.receipt{margin:8px 0 0;display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-size:14px}.receipt dd{margin:0;font-weight:700}footer .wrap{border-top:1px solid var(--line);padding-top:17px;padding-bottom:18px;color:var(--sub);font-size:13px}
+@media(max-width:720px){.wrap{padding:0 18px}main.wrap{grid-template-columns:1fr;gap:17px;padding-top:25px;padding-bottom:32px}.intro{padding-top:0}.intro p{margin-bottom:0}.intro details{margin-top:4px}.top{min-height:59px}h1{margin-bottom:12px}.eyebrow{margin-bottom:8px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#return-form">Skip to return form</a>
+<header><div class="wrap top"><div class="brand"><span class="mark" aria-hidden="true">↩</span>Relay Returns</div><div class="top-right"><span class="badge">Returns demo</span><a href="./payments.html">Payments</a></div></div></header>
+<main class="wrap">
+<section class="intro" aria-labelledby="title">
+<p class="eyebrow">Self-service returns</p>
+<h1 id="title">Start a return.</h1>
+<p>Submit your order and we’ll check it right away. Eligible refunds are processed automatically in this demo.</p>
+<details><summary>Return policy</summary><p>Orders qualify within 30 days, up to $150. Demo orders do not require a return shipment.</p></details>
+</section>
+<section class="card" aria-labelledby="form-title">
+<h2 id="form-title">Order details</h2>
+<form id="return-form">
+<div class="field"><label for="order">Order number</label><input id="order" name="order" required maxlength="16" placeholder="RX-104" aria-describedby="order-hint" autocomplete="off" autocapitalize="characters" spellcheck="false"><p class="hint" id="order-hint">Try RX-104 for an eligible demo order.</p></div>
+<div class="field"><label for="reason">Reason for return</label><select id="reason" name="reason" required><option value="">Select a reason</option><option value="damaged">Item arrived damaged</option><option value="wrong-item">Received the wrong item</option><option value="changed-mind">Changed my mind</option><option value="other">Other</option></select></div>
+<button class="primary" type="submit">Submit return</button>
+<div class="result" id="result" role="status" aria-atomic="true"></div>
+<details><summary>Try an example</summary><div class="examples"><button type="button" data-order="RX-104" data-reason="damaged">Eligible order</button><button type="button" data-order="RX-209" data-reason="changed-mind">Outside return window</button></div></details>
+<p class="notice">Uses sample orders. No real payments are made.</p>
+</form>
+</section>
+</main>
+<footer><div class="wrap">Relay · Automated returns demo</div></footer>
+<script type="module">
+import {submitReturn} from "./returns.mjs";
+const order = document.getElementById("order");
+const reason = document.getElementById("reason");
+const result = document.getElementById("result");
+const clear = () => {result.replaceChildren(); delete result.dataset.status;};
+const node = (tag,text) => Object.assign(document.createElement(tag),{textContent:text});
+const labels = {refunded:"Demo refund complete",duplicate:"Already refunded",denied:"Order is not eligible",clarify:"Order not found",invalid:"Check your details",retry:"Return not completed"};
+document.querySelectorAll("[data-order]").forEach(button => button.addEventListener("click", () => {
+  order.value = button.dataset.order;
+  reason.value = button.dataset.reason;
+  clear();
+  order.focus();
+}));
+order.addEventListener("input",clear);
+reason.addEventListener("change",clear);
+document.getElementById("return-form").addEventListener("submit",event=>{
+  event.preventDefault();
+  const storage = {getItem:key=>localStorage.getItem(key),setItem:(key,value)=>localStorage.setItem(key,value)};
+  const output = submitReturn({order:order.value,reason:reason.value},storage);
+  result.dataset.status = output.status;
+  const content = [node("h3",labels[output.status]),node("p",output.message)];
+  if (output.receipt) {
+    const dl = node("dl","");
+    dl.className = "receipt";
+    for (const [label,value] of [["Refund amount",output.receipt.amount],["Receipt",output.receipt.id]]) dl.append(node("dt",label),node("dd",value));
+    content.push(dl);
+  }
+  result.replaceChildren(...content);
+  if(output.status === "invalid") order.focus();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Relay Payments</title>
+<meta name="description" content="Create a QR code that opens a Stripe payment link.">
+<style>
+:root{color-scheme:light;--bg:#f5f5ef;--paper:#fff;--ink:#172620;--sub:#46544e;--line:#cbd4cd;--green:#194d3b;--soft:#e8f1e9;--focus:#174cc6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,sans-serif}a{color:var(--green)}button,select,input{font:inherit}button,summary{cursor:pointer}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:4px}h1,h2,p{margin-top:0}
+.wrap{max-width:1060px;margin:0 auto;padding:0 28px}.skip{position:absolute;top:8px;left:12px;z-index:2;padding:8px;background:white;transform:translateY(-200%)}.skip:focus{transform:none}
+header{background:#fbfbf8;border-bottom:1px solid var(--line)}.top{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{display:flex;gap:10px;align-items:center;font-size:20px;font-weight:800;letter-spacing:-.035em}.mark{display:grid;place-items:center;background:var(--green);color:white;width:34px;height:34px;border-radius:10px;font-size:20px}.badge{font-size:13px;font-weight:700;padding:4px 10px;background:var(--soft);color:#234934;border-radius:30px}
+main.wrap{display:grid;grid-template-columns:1fr minmax(320px,470px);align-items:start;gap:clamp(30px,7vw,95px);padding-top:clamp(35px,8vw,104px);padding-bottom:55px}.intro{padding-top:17px}.eyebrow{font-size:13px;color:var(--green);font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}h1{font-size:clamp(42px,6.4vw,80px);line-height:1;letter-spacing:-.065em;margin-bottom:19px}.intro p{max-width:330px;color:var(--sub);font-size:18px}.intro details{max-width:330px;margin-top:26px}.intro details p{font-size:15px;margin:8px 0 0}
+.card{background:var(--paper);padding:clamp(18px,4vw,32px);border:1px solid var(--line);border-radius:18px;box-shadow:0 12px 38px #283b3010}.card h2{font-size:23px;letter-spacing:-.03em;margin-bottom:17px}label{font-weight:750;display:block;margin-bottom:6px}input,select{width:100%;min-height:48px;border:1px solid #758379;border-radius:8px;padding:9px 12px;color:var(--ink);background:white}.field{margin-bottom:16px}.hint{color:var(--sub);font-size:14px;margin:6px 0 0}
+.primary{background:var(--green);color:white;border:0;border-radius:8px;width:100%;padding:11px 15px;min-height:48px;font-weight:800}.primary:hover{background:#0c392a}details{color:var(--sub)}summary{min-height:44px;display:list-item;padding:9px 0;color:var(--green);font-weight:700}form details{margin-top:8px}.examples{display:flex;flex-wrap:wrap;gap:8px}.examples button{border:1px solid #758379;background:white;color:var(--green);border-radius:7px;min-height:44px;padding:8px 10px;font-weight:650}.examples button:hover{background:var(--soft)}.notice{color:var(--sub);font-size:13px;margin:14px 0 0}
+.result:empty{display:none}.result{margin-top:15px;padding:14px;background:var(--soft);border:1px solid #aabdb0;border-radius:9px}.result[data-status=retry],.result[data-status=denied],.result[data-status=clarify],.result[data-status=invalid]{background:#fff4e5;border-color:#bd9b69}.result h3{font-size:17px;margin:0 0 3px}.result p{margin:0}.receipt{margin:8px 0 0;display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-size:14px}.receipt dd{margin:0;font-weight:700}footer .wrap{border-top:1px solid var(--line);padding-top:17px;padding-bottom:18px;color:var(--sub);font-size:13px}
+@media(max-width:720px){.wrap{padding:0 18px}main.wrap{grid-template-columns:1fr;gap:17px;padding-top:25px;padding-bottom:32px}.intro{padding-top:0}.intro p{margin-bottom:0}.intro details{margin-top:4px}.top{min-height:59px}h1{margin-bottom:12px}.eyebrow{margin-bottom:8px}}
+
+[hidden]{display:none!important}.nav-link{font-weight:750;padding:10px 0}.secondary{background:white;color:var(--green);border:1px solid #758379;border-radius:8px;min-height:44px;margin-top:8px;padding:8px 12px;font-weight:750}.secondary:hover{background:var(--soft)}.code{margin-top:20px;border-top:1px solid var(--line);padding-top:16px}.code img{display:block;width:min(100%,256px);height:auto;margin:6px auto 13px}.code a{display:inline-block;padding:9px 0;font-weight:800}.code p{margin-bottom:6px}.error{color:#8a2821;font-weight:700;margin:8px 0 0}.error:empty{margin:0}input[aria-invalid=true]{border-color:#8a2821}.demo-page{max-width:465px;margin:48px auto;padding:0 18px}.demo-page h1{font-size:42px}
+</style></head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header><div class="wrap top"><div class="brand"><span class="mark" aria-hidden="true">↗</span>Relay Payments</div><a class="nav-link" href="./index.html">Returns</a></div></header>
+<main id="main" class="wrap" tabindex="-1">
+<section class="intro" aria-labelledby="title"><p class="eyebrow">In-person checkout</p><h1 id="title">Scan to pay.</h1><p>Turn your Stripe Payment Link into a QR code. Customers scan it with their phone to open checkout.</p></section>
+<section class="card" aria-labelledby="payment-title"><h2 id="payment-title">Create a payment QR</h2>
+<form id="payment-form" novalidate>
+<div class="field"><label for="payment-link">Stripe Payment Link</label><input type="url" inputmode="url" id="payment-link" required maxlength="200" placeholder="https://buy.stripe.com/…" autocomplete="off" spellcheck="false" aria-describedby="payment-hint payment-error"><p id="payment-hint" class="hint">Copy the link from your Stripe Dashboard.</p><p id="payment-error" class="error" role="alert"></p></div>
+<button class="primary" type="submit">Create QR code</button>
+<button class="secondary" type="button" id="demo-button">Try a sample QR</button>
+</form>
+<div id="output" class="code" hidden>
+<h2 id="code-title"></h2><p id="code-detail" class="hint"></p>
+<img id="qr" alt="QR code for checkout. Use the checkout link below if you cannot scan it.">
+<a id="checkout" rel="noopener noreferrer" target="_blank">Open checkout <span aria-hidden="true">↗</span></a>
+<p id="confirmation" class="hint"></p></div>
+<p id="payment-status" class="hint" role="status"></p>
+</section></main>
+<section id="sample" class="demo-page" hidden><div class="card"><p class="eyebrow">Sample checkout</p><h1>QR scan successful.</h1><p>No payment was collected. A real payment QR opens Stripe Checkout instead.</p><a href="./payments.html">Back to payments</a></div></section>
+<script type="module">
+import {parsePaymentLink,qrImage} from "./payments.mjs";
+const byId=id=>document.getElementById(id);
+const input=byId("payment-link"), output=byId("output"), status=byId("payment-status"), error=byId("payment-error");
+const clear=()=>{
+  output.hidden=true;
+  byId("checkout").removeAttribute("href");
+  byId("qr").removeAttribute("src");
+  status.textContent="";
+  error.textContent="";
+  input.removeAttribute("aria-invalid");
+};
+function show({href,test,demo}){
+  const qr=qrImage(href);
+  byId("code-title").textContent=demo?"Sample QR":test?"Stripe test QR":"Stripe checkout QR";
+  byId("code-detail").textContent=demo?"Scan to see how it works. No charge.":test?"Opens Stripe test checkout. No real charge.":"Ask your customer to scan with their phone.";
+  byId("confirmation").textContent=demo?"The private sample may require sign-in on another device.":"Check your Stripe Dashboard to confirm payment.";
+  byId("qr").src=qr;
+  byId("checkout").href=href;
+  byId("checkout").firstChild.textContent=demo?"Open sample checkout ":"Open Stripe checkout ";
+  output.hidden=false;
+  status.textContent="QR code ready.";
+}
+if(new URLSearchParams(location.search).get("sample")==="1"){
+  byId("main").hidden=true;
+  document.querySelector(".skip").href="#sample";
+  byId("sample").hidden=false;
+  byId("sample").tabIndex=-1;
+}
+input.addEventListener("input",clear);
+byId("payment-form").addEventListener("submit",event=>{
+  event.preventDefault();
+  clear();
+  const link=parsePaymentLink(input.value);
+  if(!link){
+    input.setAttribute("aria-invalid","true");
+    error.textContent="Enter a standard Stripe Payment Link that starts with https://buy.stripe.com/.";
+    input.focus();
+    return;
+  }
+  show(link);
+});
+byId("demo-button").addEventListener("click",()=>{
+  clear();
+  show({href:new URL("./payments.html?sample=1",location.href).href,demo:true});
+});
+</script></body></html>
